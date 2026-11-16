@@ -1,0 +1,85 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cuaderno de ejercicios · Español Italiano</title><style>*{box-sizing:border-box}body{margin:0;background:#f3f6fc;color:#16233d;font:16px system-ui}header{padding:24px 16px;background:linear-gradient(115deg,#1d4ed8,#0ea5e9);color:white}main{max-width:730px;margin:auto;padding:16px}.card{background:white;border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 3px 12px #18345a14}button,input,select{font:inherit;border-radius:10px;padding:11px;border:1px solid #cbd5e1}button{background:#e8f0ff;color:#17418c;cursor:pointer}button.primary{background:#2563eb;color:white;border-color:#2563eb}button:disabled{opacity:.5}input[type=text]{width:100%;margin-top:8px}input[type=radio]{width:auto}select{width:100%}.option{display:block;padding:10px;border:1px solid #e2e8f0;border-radius:10px;margin:7px 0}.muted{color:#64748b;font-size:14px}.correct{color:#166534;background:#dcfce7;padding:9px;border-radius:9px}.wrong{color:#991b1b;background:#fee2e2;padding:9px;border-radius:9px}.q{border-bottom:1px solid #e2e8f0;padding:14px 0}.q:last-child{border:0}.tag{display:inline-block;background:#e0f2fe;border-radius:20px;padding:5px 10px;font-size:13px}.row{display:flex;gap:9px;flex-wrap:wrap}.row button{flex:1}h1{margin:0;font-size:24px}h2{margin-top:0;font-size:21px}.score{font-size:34px;font-weight:800}.progress{height:9px;background:#e2e8f0;border-radius:9px;overflow:hidden}.bar{height:100%;background:#2563eb}a{color:#1d4ed8}</style></head><body><header><div style="max-width:730px;margin:auto"><h1>✏️ Cuaderno de español</h1><p>Ejercicios de vocabulario y verbos · Español ↔ Italiano</p><a style="color:white" href="index.html">← Volver al diccionario</a></div></header><main><div class="card"><h2>Elige qué quieres practicar</h2><p class="muted">Puedes hacer un tema o un examen con preguntas mezcladas.</p><select id="topic" onchange="begin()"></select><p id="intro" class="muted"></p><div class="row"><button onclick="begin()">🔄 Nuevos ejercicios</button><button class="primary" onclick="check()">✅ Corregir</button></div></div><div id="sheet"></div><div id="result"></div></main><script>
+const bank={
+'Viajes y transportes':[
+['choice','¿Dónde se recogen las maletas después del vuelo?',['En la recogida de equipaje','En la taquilla','En el andén'],0],
+['choice','¿Dónde esperamos el tren?',['En la aduana','En el andén','En el puerto'],1],
+['choice','¿Dónde compramos un billete?',['En la taquilla','En el hospital','En el camping'],0],
+['fill','Para viajar a otro país necesito mi ___ (passaporto).','pasaporte'],
+['fill','La ___ (valigia) es muy pesada.','maleta'],
+['choice','¿Qué significa «andata e ritorno»?',['Ida y vuelta','Solo ida','Llegadas'],0],
+['fill','El avión sale del ___ (aeroporto).','aeropuerto'],
+['choice','¿Qué significa «pedaggio»?',['Peaje','Puente','Puerto'],0],
+['fill','Antes del vuelo hacemos la ___ (check-in).','facturación'],
+['choice','¿Dónde se revisan las mercancías al cruzar una frontera?',['En la aduana','En el museo','En el hotel'],0]],
+'Vacaciones y alojamientos':[
+['choice','¿Dónde se duerme en una tienda de campaña?',['En un camping','En una catedral','En un estadio'],0],
+['fill','Una ___ (crociera) es un viaje en barco.','crucero'],
+['choice','¿Cómo se dice «alloggio»?',['Alojamiento','Alquiler','Albergue'],0],
+['fill','La ___ (camera) del hotel tiene dos camas.','habitación'],
+['choice','¿Qué establecimiento es un «ostello»?',['Albergue','Balneario','Castillo'],0],
+['fill','Vamos a hacer una ___ (escursione) por la montaña.','excursión'],
+['choice','¿Qué es una agencia de viajes?',['Un lugar donde organizan viajes','Un hospital','Un parque'],0],
+['choice','¿Qué alojamiento suele encontrarse en el campo?',['Casa rural','Estación','Comisaría'],0]],
+'Aseo personal':[
+['choice','¿Qué usamos para secarnos después de ducharnos?',['Toalla','Peine','Colonia'],0],
+['fill','Me lavo los dientes con el ___ (dentifricio).','dentifricio|pasta de dientes'],
+['choice','¿Qué significa «accappatoio»?',['Albornoz','Esponja','Champú'],0],
+['fill','Me seco el pelo con el ___ (phon).','secador|secador de pelo'],
+['choice','¿Con qué nos peinamos?',['Con un peine','Con una toalla','Con una esponja'],0],
+['fill','Uso ___ (shampoo) para lavarme el pelo.','champú|champu'],
+['choice','¿Qué significa «spugna»?',['Esponja','Papelera','Perfume'],0],
+['fill','Antes de salir me pongo ___ (profumo).','perfume']],
+'Ciudad y monumentos':[
+['choice','¿Dónde deben caminar los peatones?',['Por la acera','Por la autopista','Por el carril de coches'],0],
+['fill','El ___ (semaforo) está en rojo.','semáforo'],
+['choice','¿Qué significa «lampione»?',['Farola','Fuente','Muralla'],0],
+['fill','Cruza por el ___ (strisce pedonali).','paso de cebra'],
+['choice','¿Cuál es un edificio religioso?',['Mezquita','Estadio','Banco'],0],
+['choice','¿Dónde podemos ver exposiciones?',['Museo','Peaje','Comisaría'],0],
+['fill','Nos vemos en la ___ (piazza) del centro.','plaza'],
+['choice','¿Cómo se dice «quartiere»?',['Barrio','Buzón','Puente'],0],
+['fill','La carta está en el ___ (cassetta postale).','buzón']],
+'Servicios e indicaciones':[
+['choice','¿Dónde se envía una carta?',['En Correos','En el estadio','En el banco'],0],
+['fill','Gira a la ___ (sinistra).','izquierda'],
+['choice','¿Qué significa «vai sempre dritto»?',['Sigue todo recto','Gira a la derecha','Sube'],0],
+['fill','Para llegar al museo tienes que ___ (attraversare) la calle.','cruzar'],
+['choice','¿Dónde trabajan los bomberos?',['En el parque de bomberos','En el banco','En el hotel'],0],
+['fill','La ___ (fermata) de autobús está cerca.','parada'],
+['choice','¿Dónde vamos si nos han robado?',['A la comisaría','Al museo','Al camping'],0],
+['choice','¿Qué significa «scendere»?',['Bajar','Subir','Seguir'],0]],
+'Presente de indicativo':[
+['fill','Yo ___ (hablar) español.','hablo'],['fill','Tú ___ (comer) pasta.','comes'],['fill','Ella ___ (vivir) en Italia.','vive'],['fill','Nosotros ___ (estudiar) juntos.','estudiamos'],['fill','Vosotros ___ (beber) agua.','bebéis'],['fill','Ellos ___ (abrir) la puerta.','abren'],['choice','Yo ___ todos los días.',['trabajo','trabaje','trabajas'],0],['choice','Nosotros ___ español.',['aprendemos','aprendamos','aprenden'],0]],
+'Presente de subjuntivo regular':[
+['fill','Espero que tú ___ (hablar) español.','hables'],
+['fill','Quiero que nosotros ___ (comer) juntos.','comamos'],
+['fill','Es importante que ella ___ (estudiar) más.','estudie'],
+['fill','Espero que ellos ___ (vivir) aquí.','vivan'],
+['fill','Quiero que vosotros ___ (abrir) la puerta.','abráis'],
+['fill','Espero que yo ___ (cantar) bien.','cante'],
+['choice','Ojalá que tú ___ pronto.',['llegues','llegas','lleguen'],0],
+['choice','Es importante que nosotros ___ agua.',['bebamos','bebemos','beban'],0],
+['choice','¿Qué vocal aparece en el subjuntivo regular de -AR?',['E','A','O'],0],
+['choice','¿Qué vocal aparece en el subjuntivo regular de -ER e -IR?',['A','E','O'],0]],
+'Perífrasis verbales':[
+['choice','___ estudiando español desde hace dos años.',['Llevo','Dejo de','Sigo sin'],0],
+['choice','He ___ fumar.',['dejado de','seguido sin','llevado'],0],
+['choice','Todavía no entiendo: ___ entenderlo.',['Sigo sin','Dejo de','Llevo'],0],
+['choice','¿Qué expresa «seguir + gerundio»?',['Continuidad','Interrupción','Prohibición'],0],
+['choice','¿Qué expresa «llevar sin + infinitivo»?',['Tiempo sin hacer algo','Una obligación','Una posibilidad'],0],
+['fill','Llevo dos días sin ___ (entrenar).','entrenar'],
+['fill','Sigo ___ (trabajar) en el mismo lugar.','trabajando'],
+['fill','He dejado de ___ (jugar) al fútbol.','jugar'],
+['choice','«La puerta está cerrada» es…',['Estar + participio','Seguir + gerundio','Llevar sin + infinitivo'],0],
+['choice','«Llevo viviendo aquí tres años» significa…',['Vivo aquí desde hace tres años','Viví aquí tres días','Voy a vivir aquí'],0]]
+};
+const tips={'Viajes y transportes':'Aeropuerto, andén, aduana, billete, equipaje, facturación.','Vacaciones y alojamientos':'Hotel, albergue, camping, habitación, excursión, crucero.','Aseo personal':'Toalla, peine, cepillo, secador, champú, pasta de dientes.','Ciudad y monumentos':'Acera, semáforo, paso de cebra, mezquita, museo, barrio.','Servicios e indicaciones':'Girar a la izquierda/derecha, cruzar, seguir recto, subir y bajar.','Presente de indicativo':'Hablar: hablo, hablas, habla, hablamos, habláis, hablan. Comer: como, comes, come, comemos, coméis, comen. Vivir: vivo, vives, vive, vivimos, vivís, viven.','Presente de subjuntivo regular':'-AR → e, es, e, emos, éis, en. -ER/-IR → a, as, a, amos, áis, an. Ejemplo: Espero que estudies.','Perífrasis verbales':'Llevar + gerundio (duración), seguir + gerundio (continuidad), seguir sin + infinitivo (todavía no), dejar de + infinitivo (interrupción).'};
+const select=document.getElementById('topic');select.innerHTML=Object.keys(bank).concat('Examen mixto').map(k=>'<option>'+k+'</option>').join('');
+let current=[],corrected=false;
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function begin(){corrected=false;const t=select.value;let pool=t==='Examen mixto'?Object.values(bank).flat():bank[t];current=shuffle(pool).slice(0,t==='Examen mixto'?20:10).map(q=>q[0]==='choice'?['choice',q[1],shuffle(q[2]),q[2][q[3]]]:q);document.getElementById('intro').textContent=t==='Examen mixto'?'20 preguntas de todos los temas':tips[t];document.getElementById('sheet').innerHTML=current.map((q,i)=>'<div class="card q"><span class="tag">Ejercicio '+(i+1)+' de '+current.length+'</span><p><b>'+q[1]+'</b></p>'+(q[0]==='fill'?'<input type="text" id="a'+i+'" autocomplete="off" placeholder="Escribe la respuesta…">':q[2].map(o=>'<label class="option"><input type="radio" name="a'+i+'" value="'+encodeURIComponent(o)+'"> '+o+'</label>').join(''))+'<div id="feedback'+i+'"></div></div>').join('');document.getElementById('result').innerHTML='';window.scrollTo({top:0,behavior:'smooth'})}
+function norm(s){return String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ')}
+function check(){if(corrected)return;corrected=true;let score=0;current.forEach((q,i)=>{let a=q[0]==='fill'?document.getElementById('a'+i).value:document.querySelector('input[name=a'+i+']:checked')?.value;let val=q[0]==='choice'?(a?decodeURIComponent(a):''):a||'';let target=q[0]==='choice'?q[3]:q[2];let ok=target.split('|').some(v=>norm(v)===norm(val));if(ok)score++;document.getElementById('feedback'+i).innerHTML='<p class="'+(ok?'correct':'wrong')+'">'+(ok?'✓ ¡Muy bien!':'✗ Respuesta correcta: '+target.split('|')[0])+'</p>'});const note=(score/current.length*10).toFixed(1);document.getElementById('result').innerHTML='<div class="card"><h2>🏆 Resultado</h2><div class="score">'+note+' / 10</div><p>'+score+' respuestas correctas de '+current.length+'</p><div class="progress"><div class="bar" style="width:'+(score/current.length*100)+'%"></div></div><p class="muted">Revisa las correcciones y repite los ejercicios que necesites.</p><div class="row"><button class="primary" onclick="share('+score+','+current.length+')">📲 Enviar nota</button><button onclick="begin()">🔄 Repetir</button></div></div>';document.getElementById('result').scrollIntoView({behavior:'smooth'})}
+function share(score,total){let text='Mi repaso de español 🇪🇸🇮🇹\nTema: '+select.value+'\nNota: '+(score/total*10).toFixed(1)+'/10 ('+score+'/'+total+')';if(navigator.share)navigator.share({text}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank')}
+begin();
+</script></body></html>
