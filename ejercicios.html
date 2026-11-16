@@ -160,7 +160,7 @@ document.querySelectorAll('.langbar button').forEach(b=>{b.classList.toggle('sel
 const root=document.querySelector('main');
 if(root){const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(walker.nextNode())translateText(walker.currentNode,current)}
 document.querySelectorAll('input[placeholder]').forEach(el=>{if(!el.dataset.originalPlaceholder)el.dataset.originalPlaceholder=el.placeholder;el.placeholder=current==='it'?(esToIt[el.dataset.originalPlaceholder]||el.dataset.originalPlaceholder):el.dataset.originalPlaceholder});
-document.querySelectorAll('select option').forEach(el=>{if(!el.dataset.originalLabel)el.dataset.originalLabel=el.textContent;el.textContent=current==='it'?(esToIt[el.dataset.originalLabel]||el.dataset.originalLabel):el.dataset.originalLabel});
+document.querySelectorAll('select option').forEach(el=>{if(!el.dataset.originalLabel)el.dataset.originalLabel=el.textContent;el.textContent=current==='it'?(esToIt[el.dataset.originalLabel]||el.dataset.originalLabel):el.dataset.originalLabel;el.value=el.dataset.originalLabel});
 }
 const bar=document.createElement('div');bar.className='langbar';bar.innerHTML='<button type="button" data-lang="es">🇪🇸 Español</button><button type="button" data-lang="it">🇮🇹 Italiano</button>';document.querySelector('header').prepend(bar);
 bar.addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(!b)return;current=b.dataset.lang;localStorage.setItem('es-it-language',current);update()});
