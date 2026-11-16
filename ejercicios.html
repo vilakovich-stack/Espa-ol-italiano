@@ -1,4 +1,28 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cuaderno de ejercicios · Español Italiano</title><style>*{box-sizing:border-box}body{margin:0;background:#f3f6fc;color:#16233d;font:16px system-ui}header{padding:24px 16px;background:linear-gradient(115deg,#1d4ed8,#0ea5e9);color:white}main{max-width:730px;margin:auto;padding:16px}.card{background:white;border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 3px 12px #18345a14}button,input,select{font:inherit;border-radius:10px;padding:11px;border:1px solid #cbd5e1}button{background:#e8f0ff;color:#17418c;cursor:pointer}button.primary{background:#2563eb;color:white;border-color:#2563eb}button:disabled{opacity:.5}input[type=text]{width:100%;margin-top:8px}input[type=radio]{width:auto}select{width:100%}.option{display:block;padding:10px;border:1px solid #e2e8f0;border-radius:10px;margin:7px 0}.muted{color:#64748b;font-size:14px}.correct{color:#166534;background:#dcfce7;padding:9px;border-radius:9px}.wrong{color:#991b1b;background:#fee2e2;padding:9px;border-radius:9px}.q{border-bottom:1px solid #e2e8f0;padding:14px 0}.q:last-child{border:0}.tag{display:inline-block;background:#e0f2fe;border-radius:20px;padding:5px 10px;font-size:13px}.row{display:flex;gap:9px;flex-wrap:wrap}.row button{flex:1}h1{margin:0;font-size:24px}h2{margin-top:0;font-size:21px}.score{font-size:34px;font-weight:800}.progress{height:9px;background:#e2e8f0;border-radius:9px;overflow:hidden}.bar{height:100%;background:#2563eb}a{color:#1d4ed8}</style></head><body><header><div style="max-width:730px;margin:auto"><h1>✏️ Cuaderno de español</h1><p>Ejercicios de vocabulario y verbos · Español ↔ Italiano</p><a style="color:white" href="index.html">← Volver al diccionario</a></div></header><main><div class="card"><h2>Elige qué quieres practicar</h2><p class="muted">Puedes hacer un tema o un examen con preguntas mezcladas.</p><select id="topic" onchange="begin()"></select><p id="intro" class="muted"></p><div class="row"><button onclick="begin()">🔄 Nuevos ejercicios</button><button class="primary" onclick="check()">✅ Corregir</button></div></div><div id="sheet"></div><div id="result"></div></main><script>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cuaderno de ejercicios · Español Italiano</title><style>*{box-sizing:border-box}body{margin:0;background:#f3f6fc;color:#16233d;font:16px system-ui}header{padding:24px 16px;background:linear-gradient(115deg,#1d4ed8,#0ea5e9);color:white}main{max-width:730px;margin:auto;padding:16px}.card{background:white;border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 3px 12px #18345a14}button,input,select{font:inherit;border-radius:10px;padding:11px;border:1px solid #cbd5e1}button{background:#e8f0ff;color:#17418c;cursor:pointer}button.primary{background:#2563eb;color:white;border-color:#2563eb}button:disabled{opacity:.5}input[type=text]{width:100%;margin-top:8px}input[type=radio]{width:auto}select{width:100%}.option{display:block;padding:10px;border:1px solid #e2e8f0;border-radius:10px;margin:7px 0}.muted{color:#64748b;font-size:14px}.correct{color:#166534;background:#dcfce7;padding:9px;border-radius:9px}.wrong{color:#991b1b;background:#fee2e2;padding:9px;border-radius:9px}.q{border-bottom:1px solid #e2e8f0;padding:14px 0}.q:last-child{border:0}.tag{display:inline-block;background:#e0f2fe;border-radius:20px;padding:5px 10px;font-size:13px}.row{display:flex;gap:9px;flex-wrap:wrap}.row button{flex:1}h1{margin:0;font-size:24px}h2{margin-top:0;font-size:21px}.score{font-size:34px;font-weight:800}.progress{height:9px;background:#e2e8f0;border-radius:9px;overflow:hidden}.bar{height:100%;background:#2563eb}a{color:#1d4ed8}</style><style id="modern-ui">
+:root{--accent:#2563eb;--ink:#142640;--soft:#eef5ff}
+body{background:linear-gradient(155deg,#eaf3ff,#f8fbff 42%,#edf7ff);min-height:100vh}
+header{position:relative;overflow:hidden;border-radius:0 0 26px 26px;box-shadow:0 10px 25px #1d4ed827}
+header:after{content:"✦";position:absolute;right:7%;top:0;font-size:100px;opacity:.13;pointer-events:none}
+.card,details.card{border:1px solid #e4ecfa;box-shadow:0 8px 24px #153c7510;transition:transform .2s,box-shadow .2s}
+.card:focus-within{box-shadow:0 10px 28px #2563eb20}
+button{transition:transform .16s,background .16s,box-shadow .16s;font-weight:600}
+button:active{transform:scale(.97)}button:hover{box-shadow:0 4px 12px #2563eb22}
+input:focus,select:focus{outline:2px solid #60a5fa;outline-offset:2px}
+.langbar{display:flex;gap:7px;align-items:center;justify-content:flex-end;margin:0 auto 10px;max-width:730px}
+.langbar button{border-radius:99px;padding:8px 13px;background:#ffffff25;color:white;border:1px solid #ffffff80;font-size:14px}
+.langbar button.selected{background:white;color:#1d4ed8;box-shadow:0 4px 12px #0b30703d}
+.option{transition:background .16s,border-color .16s,transform .16s;cursor:pointer}
+.option:has(input:checked){background:#dbeafe;border-color:#2563eb;transform:translateX(2px);box-shadow:inset 3px 0 #2563eb}
+.q{animation:rise .3s ease both}
+@keyframes rise{from{opacity:.3;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.quiz-meter{background:#e2e8f0;height:9px;border-radius:99px;overflow:hidden;margin-top:10px}
+.quiz-meter>div{height:100%;background:linear-gradient(90deg,#38bdf8,#2563eb);transition:width .25s}
+.progress-info{font-size:13px;color:#64748b;margin:6px 0}
+#result .card{border:2px solid #bfdbfe;text-align:center}
+#result .score{color:#1d4ed8}
+.tabs{position:sticky;top:0;background:#f2f7ffed;backdrop-filter:blur(12px);z-index:5;border-radius:12px;padding:9px}
+@media(max-width:520px){main{padding:11px}header{padding:17px 14px}h1{font-size:22px}.card{padding:15px;border-radius:17px}button{min-height:43px}.tabs button{font-size:14px;padding:10px}}
+</style></head><body><header><div style="max-width:730px;margin:auto"><h1>✏️ Cuaderno de español</h1><p>Ejercicios de vocabulario y verbos · Español ↔ Italiano</p><a style="color:white" href="index.html">← Volver al diccionario</a></div></header><main><div class="card"><h2>Elige qué quieres practicar</h2><p class="muted">Puedes hacer un tema o un examen con preguntas mezcladas.</p><select id="topic" onchange="begin()"></select><p id="intro" class="muted"></p><div class="row"><button onclick="begin()">🔄 Nuevos ejercicios</button><button class="primary" onclick="check()">✅ Corregir</button></div></div><div id="sheet"></div><div id="result"></div></main><script>
 const bank={
 'Viajes y transportes':[
 ['choice','¿Dónde se recogen las maletas después del vuelo?',['En la recogida de equipaje','En la taquilla','En el andén'],0],
@@ -82,4 +106,69 @@ function norm(s){return String(s).trim().toLowerCase().normalize('NFD').replace(
 function check(){if(corrected)return;corrected=true;let score=0;current.forEach((q,i)=>{let a=q[0]==='fill'?document.getElementById('a'+i).value:document.querySelector('input[name=a'+i+']:checked')?.value;let val=q[0]==='choice'?(a?decodeURIComponent(a):''):a||'';let target=q[0]==='choice'?q[3]:q[2];let ok=target.split('|').some(v=>norm(v)===norm(val));if(ok)score++;document.getElementById('feedback'+i).innerHTML='<p class="'+(ok?'correct':'wrong')+'">'+(ok?'✓ ¡Muy bien!':'✗ Respuesta correcta: '+target.split('|')[0])+'</p>'});const note=(score/current.length*10).toFixed(1);document.getElementById('result').innerHTML='<div class="card"><h2>🏆 Resultado</h2><div class="score">'+note+' / 10</div><p>'+score+' respuestas correctas de '+current.length+'</p><div class="progress"><div class="bar" style="width:'+(score/current.length*100)+'%"></div></div><p class="muted">Revisa las correcciones y repite los ejercicios que necesites.</p><div class="row"><button class="primary" onclick="share('+score+','+current.length+')">📲 Enviar nota</button><button onclick="begin()">🔄 Repetir</button></div></div>';document.getElementById('result').scrollIntoView({behavior:'smooth'})}
 function share(score,total){let text='Mi repaso de español 🇪🇸🇮🇹\nTema: '+select.value+'\nNota: '+(score/total*10).toFixed(1)+'/10 ('+score+'/'+total+')';if(navigator.share)navigator.share({text}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank')}
 begin();
+</script><script id="bilingual-ui">
+(function(){
+const isExercise=location.pathname.endsWith('ejercicios.html');
+const translations={
+'Diccionario':'Dizionario','Resúmenes':'Riepiloghi','Ejercicios':'Esercizi','Gramática':'Grammatica',
+'🔎 Diccionario':'🔎 Dizionario','📚 Resúmenes':'📚 Riepiloghi','✏️ Ejercicios':'✏️ Esercizi','🧠 Gramática':'🧠 Grammatica',
+'Busca una palabra':'Cerca una parola','Vocabulario por temas':'Vocabolario per argomenti',
+'Escribe en español o italiano. Encontrarás la traducción y un ejemplo.':'Scrivi in spagnolo o italiano. Troverai la traduzione e un esempio.',
+'Practica lo aprendido':'Metti in pratica ciò che hai imparato',
+'Elige un tema y responde. Recibirás tu nota sobre 10.':'Scegli un argomento e rispondi. Riceverai un voto su 10.',
+'Corregir y ver nota':'Correggi e vedi il voto','🔄 Nuevos ejercicios':'🔄 Nuovi esercizi','✅ Corregir':'✅ Correggi',
+'Elige qué quieres practicar':'Scegli cosa vuoi esercitare',
+'Puedes hacer un tema o un examen con preguntas mezcladas.':'Puoi svolgere un argomento o una verifica con domande miste.',
+'Cuaderno de español':'Quaderno di spagnolo',
+'Ejercicios de vocabulario y verbos · Español ↔ Italiano':'Esercizi di vocabolario e verbi · Spagnolo ↔ Italiano',
+'← Volver al diccionario':'← Torna al dizionario',
+'Examen mixto':'Verifica mista','Viajes y transportes':'Viaggi e trasporti','Vacaciones y alojamientos':'Vacanze e alloggi','Aseo personal':'Igiene personale','La ciudad':'La città','Servicios e indicaciones':'Servizi e indicazioni',
+'Presente de indicativo':'Presente indicativo','Presente de subjuntivo regular':'Presente congiuntivo regolare','Perífrasis verbales':'Perifrasi verbali',
+'Repaso mixto':'Ripasso misto','Mi repaso de español':'Il mio ripasso di spagnolo',
+'Resultado':'Risultato','Nota':'Voto','respuestas correctas de':'risposte corrette su',
+'📲 Enviar nota':'📲 Invia il voto','🔄 Repetir':'🔄 Ripeti',
+'🏆 Resultado':'🏆 Risultato','Revisa las correcciones y repite los ejercicios que necesites.':'Controlla le correzioni e ripeti gli esercizi che ti servono.',
+'No encontramos esa palabra en este diccionario temático.':'Non abbiamo trovato questa parola nel dizionario tematico.',
+'Presente de subjuntivo regular':'Presente congiuntivo regolare',
+'Perífrasis verbales':'Perifrasi verbali',
+'Nuevo cuaderno de ejercicios':'Nuovo quaderno di esercizi',
+'📝 Nuevo cuaderno de ejercicios':'📝 Nuovo quaderno di esercizi',
+'Vocabulario, verbos, subjuntivo y perífrasis, con corrección y nota.':'Vocabolario, verbi, congiuntivo e perifrasi, con correzione e voto.',
+'Abrir ejercicios completos →':'Apri tutti gli esercizi →',
+'Regla:':'Regola:','Hablar:':'Parlare:','Comer:':'Mangiare:','Vivir:':'Vivere:',
+'Escribe la respuesta…':'Scrivi la risposta…','Ej.':'Es.'
+};
+const esToIt=translations;
+const itToEs=Object.fromEntries(Object.entries(translations).map(([a,b])=>[b,a]));
+let current=localStorage.getItem('es-it-language')||'es';
+const originalText=new WeakMap();
+function translateText(node,lang){
+if(node.nodeType!==3)return;
+const val=node.nodeValue;const trimmed=val.trim();if(!trimmed)return;
+if(!originalText.has(node))originalText.set(node,val);
+const orig=originalText.get(node);const key=orig.trim();
+if(lang==='it'&&esToIt[key])node.nodeValue=orig.replace(key,esToIt[key]);
+else if(lang==='es')node.nodeValue=orig;
+}
+function update(){
+document.documentElement.lang=current;
+document.querySelectorAll('.langbar button').forEach(b=>{b.classList.toggle('selected',b.dataset.lang===current);b.setAttribute('aria-pressed',String(b.dataset.lang===current))});
+const root=document.querySelector('main');
+if(root){const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(walker.nextNode())translateText(walker.currentNode,current)}
+document.querySelectorAll('input[placeholder]').forEach(el=>{if(!el.dataset.originalPlaceholder)el.dataset.originalPlaceholder=el.placeholder;el.placeholder=current==='it'?(esToIt[el.dataset.originalPlaceholder]||el.dataset.originalPlaceholder):el.dataset.originalPlaceholder});
+document.querySelectorAll('select option').forEach(el=>{if(!el.dataset.originalLabel)el.dataset.originalLabel=el.textContent;el.textContent=current==='it'?(esToIt[el.dataset.originalLabel]||el.dataset.originalLabel):el.dataset.originalLabel});
+}
+const bar=document.createElement('div');bar.className='langbar';bar.innerHTML='<button type="button" data-lang="es">🇪🇸 Español</button><button type="button" data-lang="it">🇮🇹 Italiano</button>';document.querySelector('header').prepend(bar);
+bar.addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(!b)return;current=b.dataset.lang;localStorage.setItem('es-it-language',current);update()});
+let busy=false;const obs=new MutationObserver(()=>{if(busy)return;busy=true;obs.disconnect();update();obs.observe(document.querySelector('main'),{subtree:true,childList:true});busy=false});
+obs.observe(document.querySelector('main'),{subtree:true,childList:true});
+if(isExercise){
+const meter=document.createElement('div');meter.innerHTML='<div class="progress-info" id="progressText"></div><div class="quiz-meter"><div id="progressFill"></div></div>';
+document.querySelector('#sheet').before(meter);
+function refreshProgress(){const total=document.querySelectorAll('#sheet .q').length;const filled=[...document.querySelectorAll('#sheet .q')].filter(q=>{const input=q.querySelector('input[type=text]');return input?input.value.trim():!!q.querySelector('input[type=radio]:checked')}).length;document.getElementById('progressText').textContent=(current==='it'?'Completate: ':'Respondidas: ')+filled+' / '+total;document.getElementById('progressFill').style.width=(total?100*filled/total:0)+'%'}
+document.querySelector('#sheet').addEventListener('input',refreshProgress);document.querySelector('#sheet').addEventListener('change',refreshProgress);
+new MutationObserver(refreshProgress).observe(document.querySelector('#sheet'),{childList:true});refreshProgress();
+}
+update();
+})();
 </script></body></html>
